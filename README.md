@@ -1,5 +1,7 @@
 # shortl
 
+# Application and images will be added as soon as possible.
+
 ## A simple link shortening application made with Python.
 
 ### Image
