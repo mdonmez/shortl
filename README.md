@@ -12,8 +12,7 @@
 - Link shortening with TinyURL.
 - Error correction (such as deleting quotes, http(s) spelling, etc.)
 - Automatic copying.
-- Link validity test.
-- Internet connection check.
+
 
 ### To do
 - More languages will be added.
