@@ -4,8 +4,6 @@
 
 ## A simple link shortening application made with Python.
 
-### Image
-![usage](https://github.com/mdonmez/shortl/assets/124686256/a665eb82-2637-4406-b356-be3facedbee4)
 
 
 
