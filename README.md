@@ -28,6 +28,11 @@ print(short_url)
 ```
 
 
+## Installation
+- Download the repository.
+- Run ```setup.py``` file.
+
+
 ## Features
 - Simple and easy to use.
 - Link shortening with TinyURL.
