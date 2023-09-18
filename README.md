@@ -8,6 +8,7 @@
 
 ## Usage
 
+#### Using the copy feature
 ```python
 import shortl
 
@@ -16,6 +17,16 @@ short_url = shortl.Shorten(long_url=very_long_url, copy=True)
 
 print(short_url)
 ```
+#### Without using the copy feature
+```python
+import shortl
+
+very_long_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+short_url = shortl.Shorten(long_url=very_long_url, copy=False)
+
+print(short_url)
+```
+
 
 ## Features
 - Simple and easy to use.
