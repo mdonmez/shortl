@@ -29,8 +29,9 @@ print(short_url)
 
 
 ## Installation
-- Download the repository.
-- Run ```setup.py``` file.
+- Download the ```shortl-x.x.x.tar.gz``` from releases.
+- Go to downloaded directory.
+- Run ```pip install shortl-x.x.x.tar.gz``` file.
 
 
 ## Features
