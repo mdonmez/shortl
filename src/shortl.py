@@ -17,24 +17,24 @@ def shorten_url(url):
     query_params = {"url": url}
     response = requests.get(api_url, params=query_params)
     return response.text
-
+    
 # This function does copy short links to clipboard
 def copy_to_clipboard(text):
     clipboard.copy(text)
     
-
 # This function does add https to the URL if there are not
 def add_https_to_url(url):
     if not url.startswith("http://") and not url.startswith("https://"):
         url = "https://" + url
     return url
-
+    
 # This function does remove unwanted characters from the URL
 def remove_unwanted_characters(long_url):        
     long_url = long_url.strip('"')
     long_url = long_url.strip("'")
     long_url = long_url.strip(" ")
     return long_url
+
 
 
 
