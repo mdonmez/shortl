@@ -1,23 +1,34 @@
 # shortl
 
+*A Python module for simple link shortening.*
 
-## A simple link shortening application made with Python.
+## Description
 
-### Images
-![app_image](https://github.com/mdonmez/shortl/assets/124686256/cbef1165-31c1-4f9f-b8e3-4436267fa197)
+"shortl" is a Python module that allows you to easily shorten long URLs using various shortening services. It also provides error correction and automatic copying of the shortened URL.
 
-### Usage
-- Write "shortl *long_url*" in bash and your URL will be shortened.
+## Usage
 
-### Features
+```python
+import shortl
+
+very_long_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+short_url = shortl.Shorten(long_url=very_long_url, copy=True)
+
+print(short_url)
+```
+
+## Features
 - Simple and easy to use.
 - Link shortening with TinyURL.
-- Error correction (such as deleting quotes, http(s) spelling, etc.)
+- Error correction (e.g., removing quotes, correcting http(s) spelling).
 - Automatic copying.
 
 
-### To do
-- More languages will be added.
-- More link shortening services will be added.
-- Setting options will be added.
-- The writing of the code will be improved.
+## To Do
+- Add more link shortening services.
+- Include additional setting options.
+- Improve code readability and documentation.
+
+
+## License
+This project is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) 
