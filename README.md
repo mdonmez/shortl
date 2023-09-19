@@ -13,7 +13,9 @@
 import shortl
 
 very_long_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-short_url = shortl.Shorten(long_url=very_long_url, copy=True)
+
+url_shortener = shortl.Shortl()
+short_url = url_shortener.shorten(long_url=very_long_url, copy=True)
 
 print(short_url)
 ```
@@ -22,7 +24,9 @@ print(short_url)
 import shortl
 
 very_long_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-short_url = shortl.Shorten(long_url=very_long_url, copy=False)
+
+url_shortener = shortl.Shortl()
+short_url = url_shortener.shorten(long_url=very_long_url, copy=False)
 
 print(short_url)
 ```
