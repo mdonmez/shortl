@@ -33,9 +33,9 @@ print(short_url)
 
 
 ## Installation
-- Download the ```shortl-x.x.x-py3-none-any``` from releases.
+- Download the ```shortl-x.x.x-py3-none-any.whl``` from releases.
 - Go to downloaded directory.
-- Run ```pip install shortl-x.x.x-py3-none-any``` file.
+- Run ```pip install shortl-x.x.x-py3-none-any.whl``` file.
 
 
 ## Features
