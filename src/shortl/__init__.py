@@ -1,6 +1,5 @@
 """
-Google Spell Checker.
-A simple multilingual Spell Checker using Google Text Completion.
+shortl
 """
 from .shortl import Shortl
 
