@@ -87,4 +87,8 @@ You can replace `"ulvis"` with `"tinyurl"` or `"zws"` to use other providers.
 
 ## License
 
-This project is licensed under the MIT License - See [LICENSE](LICENSE) for details.
+This project is licensed under the GPLv3 License - See [LICENSE](LICENSE) for details.
+
+## Notes
+
+I will try to package this application and make it into an installable pip package.
