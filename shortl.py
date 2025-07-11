@@ -67,11 +67,39 @@ class Shortener:
         return res.text.strip()
 
     @classmethod
-    def register_custom(cls, func: Callable) -> Callable:
-        if not callable(func):
-            raise TypeError("Custom shortener must be callable.")
-        cls._custom_providers[func.__name__] = func
-        return func
+    def register_custom(
+        cls, func_or_code: str | Callable, name: str | None = None
+    ) -> str:
+        """
+        Register a custom provider.
+        - If func_or_code is a callable, registers it under its __name__ or the provided name.
+        - If func_or_code is a string (function code), executes it and registers the first callable found under the provided name.
+        Returns the provider name.
+        """
+        if callable(func_or_code):
+            func = func_or_code
+            provider_name = name if name is not None else func.__name__
+        elif isinstance(func_or_code, str):
+            if not name:
+                raise ValueError(
+                    "A name must be provided when registering from function code."
+                )
+            local_ns: dict = {}
+            exec(func_or_code, {}, local_ns)
+            func = None
+            for v in local_ns.values():
+                if callable(v):
+                    func = v
+                    break
+            if func is None:
+                raise ValueError("No callable found in function_code.")
+            provider_name = name
+        else:
+            raise TypeError(
+                "func_or_code must be a callable or a string of function code."
+            )
+        cls._custom_providers[provider_name] = func
+        return provider_name
 
     class _ProviderNamespace:
         def __init__(self, providers: dict[str, Callable]):
