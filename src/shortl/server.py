@@ -1,5 +1,5 @@
 from mcp.server.fastmcp import FastMCP
-from shortl import Shortener  # type: ignore
+from shortl import Shortener
 
 mcp = FastMCP("Shortl MCP Server")
 shortener = Shortener()
