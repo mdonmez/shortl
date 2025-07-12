@@ -5,8 +5,15 @@ description = "A simple, extensible Python library for URL shortening with built
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "httpx>=0.28.1",
-    "mcp[cli]>=1.11.0",
+    "httpx",
+]
+
+[project.optional-dependencies]
+mcp = [
+    "mcp[cli]",
+]
+test = [
+    "pytest",
 ]
 
 [project.scripts]
