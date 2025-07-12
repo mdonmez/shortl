@@ -10,4 +10,4 @@ dependencies = [
 ]
 
 [project.scripts]
-shortl = "shortl.shortl:main"
+shortl_mcp = "shortl.mcp_server:main"
