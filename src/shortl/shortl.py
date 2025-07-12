@@ -1,5 +1,4 @@
 import httpx
-from typing import Callable
 
 
 class Shortener:
@@ -7,15 +6,15 @@ class Shortener:
     Main interface for URL shortening. Includes built-in providers and supports custom ones.
     """
 
-    _builtin_providers: dict[str, Callable] = {}
-    _custom_providers: dict[str, Callable] = {}
+    _builtin_providers: dict[str, object] = {}
+    _custom_providers: dict[str, object] = {}
 
     def __init__(self) -> None:
         self._register_builtin("isgd", self._isgd)
         self._register_builtin("tinyurl", self._tinyurl)
         self.builtin_providers = BuiltinProviders(self)
 
-    def _register_builtin(self, name: str, func: Callable) -> None:
+    def _register_builtin(self, name: str, func: object) -> None:
         self._builtin_providers[name] = func
 
     def list_builtins(self) -> list[str]:
@@ -24,31 +23,32 @@ class Shortener:
     def list_custom(self) -> list[str]:
         return list(self._custom_providers.keys())
 
-    def shorten(self, url: str, provider: str | Callable) -> str:
+    def shorten(self, url: str, provider: str | object) -> str:
         if isinstance(provider, str):
             return self._shorten_by_name(url, provider)
-        elif callable(provider):
+        if callable(provider):
             return self._shorten_by_callable(url, provider)
-        else:
-            raise TypeError("Provider must be a string or a callable.")
+        raise TypeError("Provider must be a string or a callable.")
 
     def _shorten_by_name(self, url: str, name: str) -> str:
-        provider_map = {**self._builtin_providers, **self._custom_providers}
+        provider_map: dict[str, object] = {
+            **self._builtin_providers,
+            **self._custom_providers,
+        }
         if name not in provider_map:
-            available = self.list_builtins() + self.list_custom()
+            available: list[str] = self.list_builtins() + self.list_custom()
             raise ValueError(f"Provider '{name}' not found. Available: {available}")
-
-        func = provider_map[name]
-        if not callable(func):
+        func_obj: object = provider_map[name]
+        if not callable(func_obj):
             raise TypeError(f"Provider '{name}' is not callable.")
-
-        result = func(url)
+        result = func_obj(url)
         if not isinstance(result, str):
             raise TypeError(f"Provider '{name}' must return a string.")
-
         return result
 
-    def _shorten_by_callable(self, url: str, func: Callable) -> str:
+    def _shorten_by_callable(self, url: str, func: object) -> str:
+        if not callable(func):
+            raise TypeError("Custom shortener function must be callable.")
         result = func(url)
         if not isinstance(result, str):
             raise TypeError("Custom shortener function must return a string.")
@@ -67,23 +67,17 @@ class Shortener:
         return res.text.strip()
 
     @classmethod
-    def register_custom(
-        cls, func_or_code: str | Callable, name: str | None = None
-    ) -> str:
+    def register_custom(cls, func_or_code: str | object) -> str:
         """
         Register a custom provider.
-        - If func_or_code is a callable, registers it under its __name__ or the provided name.
-        - If func_or_code is a string (function code), executes it and registers the first callable found under the provided name.
+        - If func_or_code is a callable, registers it under its __name__.
+        - If func_or_code is a string (function code), executes it and registers the first callable found under its function name.
         Returns the provider name.
         """
         if callable(func_or_code):
             func = func_or_code
-            provider_name = name if name is not None else func.__name__
+            provider_name: str = func.__name__
         elif isinstance(func_or_code, str):
-            if not name:
-                raise ValueError(
-                    "A name must be provided when registering from function code."
-                )
             local_ns: dict = {}
             exec(func_or_code, {}, local_ns)
             func = None
@@ -93,7 +87,7 @@ class Shortener:
                     break
             if func is None:
                 raise ValueError("No callable found in function_code.")
-            provider_name = name
+            provider_name = func.__name__
         else:
             raise TypeError(
                 "func_or_code must be a callable or a string of function code."
@@ -102,22 +96,22 @@ class Shortener:
         return provider_name
 
     class _ProviderNamespace:
-        def __init__(self, providers: dict[str, Callable]):
+        def __init__(self, providers: dict[str, object]):
             self._providers = providers
 
-        def __getattr__(self, name: str) -> Callable:
+        def __getattr__(self, name: str) -> object:
             if name in self._providers:
-                func = self._providers[name]
-                if not callable(func):
+                func_obj: object = self._providers[name]
+                if not callable(func_obj):
                     raise TypeError(f"Provider '{name}' is not callable.")
-                return func
+                return func_obj
             raise AttributeError(f"No such provider: {name}")
 
         def __dir__(self) -> list[str]:
             return list(self._providers.keys())
 
 
-def custom_shortener(func: Callable) -> Callable:
+def custom_shortener(func: object) -> str:
     return Shortener.register_custom(func)
 
 
