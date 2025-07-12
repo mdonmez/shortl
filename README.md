@@ -50,7 +50,7 @@ graph TD
 ### Install SDK
 
 ```bash
-pip install git+https://github.com/mdonmez/shortl.git@master#egg=shortl
+uv add git+https://github.com/mdonmez/shortl.git@master#egg=shortl
 ```
 
 This command installs the latest stable version of shortl directly from GitHub.
