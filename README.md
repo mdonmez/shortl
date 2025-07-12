@@ -80,6 +80,7 @@ def myshort(url: str) -> str:
 from shortl.shortl import Shortener
 
 s = Shortener()
+
 print(s.shorten("https://example.com", "isgd"))
 ```
 
