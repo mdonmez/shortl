@@ -159,11 +159,19 @@ def create_custom_shortener(code: str) -> str:
 
 
 @mcp.tool()
+def list_providers() -> list[str]:
+    """
+    Lists all URL shortening providers available in the Shortl system.
+    """
+    return shortener.list_builtins() + shortener.list_custom()
+
+
+@mcp.tool()
 def shorten(url: str, provider: str) -> str:
     """
     Shortens a given URL using the specified provider (built-in or custom).
 
-    This function provides a unified interface for shortening URLs via the Shortl system. The provider can be any registered shortener, including built-in options (such as 'isgd' or 'tinyurl') or custom providers registered via 'create_custom_shortener'. The function validates the provider, invokes the corresponding shortening logic, and returns the resulting shortened URL.
+    This function provides a unified interface for shortening URLs via the Shortl system. The provider can be any registered shortener, including built-in options or custom providers registered via 'create_custom_shortener'. The function validates the provider, invokes the corresponding shortening logic, and returns the resulting shortened URL.
 
     Args:
         url (str):
